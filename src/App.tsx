@@ -1,26 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { FC } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import { Header } from './common/components/header/header.component';
+import { SignUpPage } from './modules/auth/pages/sign-up.page';
+import { ArticlePage } from './modules/feed/pages/article.page';
+import { GlobalFeedPage } from './modules/feed/pages/global-feed.page';
+import { ProfilePage } from './modules/profile/pages/profile.page';
 
-function App() {
+interface AppProps {}
+
+export const App: FC<AppProps> = ({}) => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="pb-16">
+      <Header />
+      <Routes>
+        <Route path="/" element={<GlobalFeedPage />}/>
+        <Route path="/@:profile" element={<ProfilePage />} />
+        <Route path="/@:profile/favorites" element={<ProfilePage />} />
+        <Route path="/article/:slug" element={<ArticlePage />} />
+        <Route path="/sign-up" element={<SignUpPage />} />
+      </Routes>
     </div>
-  );
+  )
 }
-
-export default App;
