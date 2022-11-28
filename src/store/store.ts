@@ -4,7 +4,16 @@ import { feedApi } from "../modules/feed/api/repository";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { authApi } from "../modules/auth/api/repository";
 import { authSlice } from "../modules/auth/service/slice";
-import { persistReducer, persistStore } from "redux-persist";
+import {
+  persistReducer,
+  persistStore,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from 'redux-persist';
 
 const persistConfig = {
   key: 'conduit',
@@ -12,11 +21,13 @@ const persistConfig = {
   whitelist: [authSlice.name],
 }
 
-const persistentReducer = persistReducer(persistConfig, combineReducers({
-    [feedApi.reducerPath]: feedApi.reducer,
-    [profileApi.reducerPath]: profileApi.reducer,
-    [authSlice.name]: authSlice.reducer,
-    [authApi.reducerPath]: authApi.reducer,
+const persistentReducer = persistReducer(
+    persistConfig, 
+    combineReducers({
+      [feedApi.reducerPath]: feedApi.reducer,
+      [profileApi.reducerPath]: profileApi.reducer,
+      [authSlice.name]: authSlice.reducer,
+      [authApi.reducerPath]: authApi.reducer,
   })
 );
 
@@ -24,7 +35,9 @@ export const store = configureStore({
   reducer: persistentReducer,
   middleware: (getDefaultMiddleware) =>
   getDefaultMiddleware({
-    serializableCheck: false,
+    serializableCheck: {
+      ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
+    },
   }).concat(
     feedApi.middleware, 
     profileApi.middleware, 
