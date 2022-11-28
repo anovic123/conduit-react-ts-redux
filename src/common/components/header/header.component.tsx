@@ -28,15 +28,39 @@ export const Header: FC = () => {
                 </NavLink>
               </li>
               {isLoggedIn ? (
-                <li className="ml-4">
-                  <NavLink
-                    to="/"
-                    className="py-navItem text-black/30 hover:text-black/60 hover:no-underline"
-                    onClick={logOut}
-                  >
-                    Log out
-                  </NavLink>
-                </li>
+                <>
+                  <li className="ml-4">
+                    <NavLink to="/editor" className={navLinkClasses}>
+                      <i className="mr-1 ion-compose" />
+                      New artice
+                    </NavLink>
+                  </li>
+                  <li className="ml-4">
+                    <NavLink to="/settings" className={navLinkClasses}>
+                      <i className="mr-1 ion-gear-a" />
+                      Settings
+                    </NavLink>
+                  </li>
+                  <li className="ml-4">
+                    <NavLink to={`/@${user?.username}`} className={navLinkClasses}>
+                      <img
+                        src={user?.image}
+                        alt={`${user?.username} avatar`}
+                        className="w-6 h-6 rounded-full inline-block mr-2"
+                      />
+                      {user?.username}
+                    </NavLink>
+                  </li>
+                  <li className="ml-4">
+                    <NavLink
+                      to="/"
+                      className="py-navItem text-black/30 hover:text-black/60 hover:no-underline"
+                      onClick={logOut}
+                    >
+                      Log out
+                    </NavLink>
+                  </li>
+                </>
               ) : (
                 <>
                   <li className="ml-4">
