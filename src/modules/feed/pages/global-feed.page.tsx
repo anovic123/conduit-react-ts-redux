@@ -14,41 +14,32 @@ interface GlobalFeedPageProps {}
 
 export const GlobalFeedPage: FC<GlobalFeedPageProps> = () => {
   const { isLoggedIn } = useAuth();
-  const personalFeed = useMatch(routes.personalFeed);
+  const personalFeed = useMatch(routes.personalFeed.path);
 
   const [searchParams] = useSearchParams();
   const { page } = usePageParam();
   const { data, error, isLoading, isFetching } = useGetGlobalFeedQuery({
     page,
     tag: searchParams.get('tag'),
-    isPersonalFeed: personalFeed !== null
-   });
+    isPersonalFeed: personalFeed !== null,
+  });
 
-   const feedToogleItems = [];
-   if(isLoggedIn) {
+  const feedToogleItems = [];
+  if (isLoggedIn) {
     feedToogleItems.push({
       text: 'Your feed',
-      link: '/personal-feed'
-    })
-   }
+      link: '/personal-feed',
+    });
+  }
 
   return (
     <>
-      {
-        !isLoggedIn && (
-          <Banner />
-        )
-      }
+      {!isLoggedIn && <Banner />}
       <Container>
         <FeedToggle items={feedToogleItems} />
         <div className="flex">
-          <div className='w-3/4'>
-            <Feed 
-            data={data} 
-            isLoading={isLoading} 
-            isFetching={isFetching} 
-            error={error} 
-            />
+          <div className="w-3/4">
+            <Feed data={data} isLoading={isLoading} isFetching={isFetching} error={error} />
           </div>
           <div className="w-1/4 pl-3">
             <TagCloud />
@@ -56,5 +47,5 @@ export const GlobalFeedPage: FC<GlobalFeedPageProps> = () => {
         </div>
       </Container>
     </>
-  )
-}
+  );
+};
