@@ -26,7 +26,3 @@ export const App: FC<AppProps> = () => {
     </div>
   );
 };
-
-/**
- * 51:39
- */
