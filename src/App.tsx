@@ -25,4 +25,4 @@ export const App: FC<AppProps> = () => {
       </Routes>
     </div>
   );
-};
+}
