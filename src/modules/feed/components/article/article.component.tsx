@@ -15,14 +15,19 @@ export const Article: FC<ArticleProps> = ({
   title, 
   description, 
   tagList,
-  slug
+  slug,
+  favorited
 }) => {
   return (
     <article>
       <div className="border-t border-black-10 py-6">
         <div className="mb-4 font-light flex justify-between">
           <ArticleAuthor author={author} publishedAt={publishedAt} />
-          <FavoriteButton count={favoritesCount} />
+          <FavoriteButton 
+            count={favoritesCount} 
+            slug={slug} 
+            isFavorited={favorited} 
+          />
         </div>
         <Link 
           to={`/article/${encodeURIComponent(slug)}`}

@@ -20,13 +20,9 @@ export const App: FC<AppProps> = () => {
       <Header />
       <Routes>
         {Object.values(routes).map((route) => (
-          <Route path={route.path} element={<route.element />} />
+          <Route key={`route-${route.path}`} path={route.path} element={<route.element />} />
         ))}
       </Routes>
     </div>
   );
 };
-
-/**
- * 51:39
- */

@@ -31,7 +31,14 @@ export const CommentsList: FC<CommentsListProps> = () => {
         <Link to="/sign-in">Sign in</Link> or <Link to="/sign-up">sign up</Link> to add comments on this article.</p>
       {
         data.comments.map((comment) => (
-          <CommentItem key={`comment-${comment.id}`} body={comment.body} author={comment.author} publishedAt={comment.createdAt} />
+          <CommentItem 
+            key={`comment-${comment.id}`} 
+            body={comment.body} 
+            author={comment.author} 
+            publishedAt={comment.createdAt} 
+            slug={slug!}
+            isFavorited={false}
+          />
         ))
       }
   </div>
