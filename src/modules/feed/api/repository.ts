@@ -37,57 +37,54 @@ interface FavoriteArticleParams {
 export const feedApi = createApi({
   reducerPath: 'feedApi',
   baseQuery: realWorldBaseQuery,
+  tagTypes: ['Article', 'Articles'],
   endpoints: (builder) => ({
-    getGlobalFeed: builder.query<
-      FeedData, 
-      GlobalFeedParams
-    >({
+    getGlobalFeed: builder.query<FeedData, GlobalFeedParams>({
       query: ({ page, tag, isPersonalFeed }) => ({
         url: isPersonalFeed ? '/articles/feed' : '/articles',
         params: {
           limit: FEED_PAGE_SIZE,
           offset: page * FEED_PAGE_SIZE,
-          tag
+          tag,
         },
       }),
       transformResponse,
+      providesTags: (result) =>
+        result
+          ? result?.articles.map((article) => ({
+              type: 'Article',
+              slug: article.slug,
+            }))
+          : ['Articles'],
     }),
-    getProfileFeed: builder.query<
-      FeedData,
-      ProfilePeedParams
-    >({
+    getProfileFeed: builder.query<FeedData, ProfilePeedParams>({
       query: ({ page, author, isFavorite = false }) => ({
         url: '/articles',
         params: {
           limit: FEED_PAGE_SIZE,
           offset: page * FEED_PAGE_SIZE,
           author: isFavorite ? undefined : author,
-          favorited: !isFavorite ? undefined : author
+          favorited: !isFavorite ? undefined : author,
         },
-      })
+      }),
+      transformResponse,
     }),
-    getPopularTags: builder.query<
-      PopularTagsInDTO, 
-      any
-    >({
+    getPopularTags: builder.query<PopularTagsInDTO, any>({
       query: () => ({
         url: '/tags',
       }),
     }),
-    getSingleArticle: builder.query<
-      SingleArticleInDTO, 
-      SingleArticleParams
-    >({
+    getSingleArticle: builder.query<SingleArticleInDTO, SingleArticleParams>({
       query: ({ slug }) => ({
         url: `/articles/${slug}`,
       }),
     }),
     getCommentsForArticle: builder.query<
-      ArticleCommentsInDTO, 
+      ArticleCommentsInDTO,
       SingleArticleParams
     >({
       query: ({ slug }) => ({
-        url: `/articles/${slug}/comments`
+        url: `/articles/${slug}/comments`,
       }),
     }),
     favoriteArticle: builder.mutation<
