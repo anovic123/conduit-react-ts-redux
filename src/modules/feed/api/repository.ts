@@ -37,9 +37,9 @@ interface FavoriteArticleParams {
 export const feedApi = createApi({
   reducerPath: 'feedApi',
   baseQuery: realWorldBaseQuery,
-  tagTypes: ['Article', 'Articles'],
   endpoints: (builder) => ({
     getGlobalFeed: builder.query<FeedData, GlobalFeedParams>({
+      keepUnusedDataFor: 1,
       query: ({ page, tag, isPersonalFeed }) => ({
         url: isPersonalFeed ? '/articles/feed' : '/articles',
         params: {
@@ -49,15 +49,9 @@ export const feedApi = createApi({
         },
       }),
       transformResponse,
-      providesTags: (result) =>
-        result
-          ? result?.articles.map((article) => ({
-              type: 'Article',
-              slug: article.slug,
-            }))
-          : ['Articles'],
     }),
     getProfileFeed: builder.query<FeedData, ProfilePeedParams>({
+      keepUnusedDataFor: 1,
       query: ({ page, author, isFavorite = false }) => ({
         url: '/articles',
         params: {
@@ -75,6 +69,7 @@ export const feedApi = createApi({
       }),
     }),
     getSingleArticle: builder.query<SingleArticleInDTO, SingleArticleParams>({
+      keepUnusedDataFor: 1,
       query: ({ slug }) => ({
         url: `/articles/${slug}`,
       }),

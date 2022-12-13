@@ -40,17 +40,14 @@ export const Button: FC<PropsWithChildren<ButtonProps>> = ({
         btnStyle === ButtonStyleEnum.DARK,
       'border-conduit-gray-400 text-conduit-gray-400 hover:bg-conduit-gray-400 hover:text-white':
         btnStyle === ButtonStyleEnum.LIGHT,
-      'border-conduit-green active:bg-conduit-darkGreen':
-        btnStyle === ButtonStyleEnum.GREEN,
+      'border-conduit-green active:bg-conduit-darkGreen': btnStyle === ButtonStyleEnum.GREEN,
       'bg-conduit-green text-white hover:bg-conduit-darkGreen hover:border-conduit-darkGreen hover:text-white':
-        btnStyle === ButtonStyleEnum.GREEN &&
-        variant === ButtonVariantEnum.BASE,
+        btnStyle === ButtonStyleEnum.GREEN && variant === ButtonVariantEnum.BASE,
       'bg-white text-conduit-green hover:bg-conduit-green hover:text-white disabled:bg-conduit-darkGreen disabled:text-white':
-        btnStyle === ButtonStyleEnum.GREEN &&
-        variant === ButtonVariantEnum.OUTLINE,
+        btnStyle === ButtonStyleEnum.GREEN && variant === ButtonVariantEnum.OUTLINE,
       'py-1 px-2 text-sm rounded-buttonSm': size === ButtonSizeEnum.BASE,
       'py-3 px-6 text-xl rounded': size === ButtonSizeEnum.LG,
-    }
+    },
   );
 
   return (
